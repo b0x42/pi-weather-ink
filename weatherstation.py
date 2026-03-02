@@ -305,15 +305,25 @@ def display_weather(epd, temperature, temperature_max, summary, icon_char, has_r
             epd.display(epd.getbuffer(image_black))
 
         log_message("Display updated successfully.")
+    except FileNotFoundError as e:
+        log_message(f"Error in display: {type(e).__name__}: {e.filename or e}")
     except Exception as e:
         log_message(f"Error in display: {type(e).__name__}: {e}")
     finally:
-        epd.sleep()
+        try:
+            epd.sleep()
+        except Exception:
+            pass
 
 
 def main():
     if not API_KEY:
         log_message("ERROR: PIRATE_WEATHER_API_KEY environment variable not set")
+        sys.exit(1)
+
+    use_emulator = os.environ.get("USE_EMULATOR", "false").lower() == "true"
+    if not use_emulator and not os.path.exists("/dev/spidev0.0"):
+        log_message("ERROR: SPI is not enabled. Enable it with: sudo raspi-config nonint do_spi 0")
         sys.exit(1)
 
     station = WeatherStation()

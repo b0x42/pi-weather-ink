@@ -211,7 +211,8 @@ See the [Troubleshooting Guide](docs/TROUBLESHOOTING.md) for solutions to common
 ```
 pi-weather-ink/
 ├── install.sh                  # Automated installer for Raspberry Pi
-├── fix-pi-zero-readbusy.sh     # Pi Zero ReadBusy hang fix script
+├── scripts/
+│   └── fix-pi-zero-readbusy.sh # Pi Zero ReadBusy hang fix script
 ├── pi_weather_ink.py           # Main application
 ├── display_config.py           # Display configuration and module loading
 ├── emulator_adapter.py         # E-Paper-Emulator adapter for testing without hardware

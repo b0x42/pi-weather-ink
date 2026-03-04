@@ -9,10 +9,10 @@ import pirateweather
 from dotenv import load_dotenv
 from PIL import Image, ImageDraw, ImageFont
 
-from display_config import get_display_config, get_layout_config, load_display_module
+from .display_config import get_display_config, get_layout_config, load_display_module
 
-# Directory containing this script (for finding package data files)
-SCRIPT_DIR = Path(__file__).parent
+# Project root directory (for finding icons/ and .env)
+SCRIPT_DIR = Path(__file__).parent.parent
 
 # Load environment variables from .env file
 load_dotenv(SCRIPT_DIR / ".env")
@@ -31,7 +31,7 @@ DISPLAY_MODEL = os.environ.get("DISPLAY_MODEL", "epd2in13bc")
 # Display settings
 FONT_PATH = os.environ.get("FONT_PATH", "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf")
 ICON_FONT_PATH = str(SCRIPT_DIR / "icons" / "weathericons.ttf")
-LOG_FILE = os.environ.get("LOG_FILE_PATH", "/var/log/weatherstation.log")
+LOG_FILE = os.environ.get("LOG_FILE_PATH", "/var/log/pi-weather-ink.log")
 
 # Load icon mapping from file
 with open(SCRIPT_DIR / "icons" / "icons.json", "r", encoding="utf-8") as file:

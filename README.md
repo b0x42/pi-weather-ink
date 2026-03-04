@@ -1,4 +1,4 @@
-# Weather Station e-Paper Display
+# Pi Weather Ink
 
 [![Python 3](https://img.shields.io/badge/Python-3-blue.svg)](https://www.python.org/)
 [![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-Compatible-c51a4a.svg)](https://www.raspberrypi.org/)
@@ -90,7 +90,7 @@ All settings are configured via environment variables in your `.env` file.
 ```bash
 cd ~/pi-weather-ink
 source venv/bin/activate
-python weatherstation.py
+pi-weather-ink
 ```
 
 ### Run as System Service (recommended)
@@ -98,20 +98,20 @@ python weatherstation.py
 For automatic startup on boot:
 
 ```bash
-sudo cp weatherstation.service /etc/systemd/system/
+sudo cp pi-weather-ink.service /etc/systemd/system/
 sudo systemctl daemon-reload
-sudo systemctl enable weatherstation
-sudo systemctl start weatherstation
+sudo systemctl enable pi-weather-ink
+sudo systemctl start pi-weather-ink
 ```
 
 **Check status:**
 ```bash
-sudo systemctl status weatherstation
+sudo systemctl status pi-weather-ink
 ```
 
 **View logs:**
 ```bash
-tail -f /var/log/weatherstation.log
+tail -f /var/log/pi-weather-ink.log
 ```
 
 ## Supported Display Models
@@ -150,7 +150,7 @@ All Waveshare 2.13" e-Paper displays are supported:
 |----------|-------------|---------|
 | `USE_EMULATOR` | Use E-Paper-Emulator instead of hardware | false |
 | `USE_TKINTER` | Use Tkinter window instead of browser (only with emulator) | false |
-| `LOG_FILE_PATH` | Path to log file (use local path on macOS) | `/var/log/weatherstation.log` |
+| `LOG_FILE_PATH` | Path to log file (use local path on macOS) | `/var/log/pi-weather-ink.log` |
 | `FONT_PATH` | TrueType font file (see [macOS font setup](#macos-install-font)) | `/usr/share/fonts/.../DejaVuSans-Bold.ttf` |
 
 ### Quick Setup (macOS/Linux)
@@ -168,10 +168,10 @@ cp .env.example .env
 # Edit .env and add your PIRATE_WEATHER_API_KEY
 
 # 3. Run with emulator (opens in browser at http://localhost:5000)
-USE_EMULATOR=true python weatherstation.py
+USE_EMULATOR=true pi-weather-ink
 
 # Or use Tkinter window instead of browser
-USE_EMULATOR=true USE_TKINTER=true python weatherstation.py
+USE_EMULATOR=true USE_TKINTER=true pi-weather-ink
 ```
 
 ### macOS: Install Font
@@ -188,10 +188,10 @@ echo "FONT_PATH=~/Library/Fonts/DejaVuSans-Bold.ttf" >> .env
 
 ```bash
 # Bi-color (black/red) - opens in browser
-USE_EMULATOR=true DISPLAY_MODEL=epd2in13bc python weatherstation.py
+USE_EMULATOR=true DISPLAY_MODEL=epd2in13bc pi-weather-ink
 
 # Monochrome (black/white) - opens in browser
-USE_EMULATOR=true DISPLAY_MODEL=epd2in13d python weatherstation.py
+USE_EMULATOR=true DISPLAY_MODEL=epd2in13d pi-weather-ink
 ```
 
 **Note:** The emulator uses Flask and serves at http://localhost:5000 by default. Set `USE_TKINTER=true` if you prefer a native window.
@@ -211,19 +211,20 @@ See the [Troubleshooting Guide](docs/TROUBLESHOOTING.md) for solutions to common
 ```
 pi-weather-ink/
 ├── install.sh                  # Automated installer for Raspberry Pi
-├── fix-pi-zero-readbusy.sh     # Pi Zero ReadBusy hang fix script
-├── weatherstation.py           # Main application
-├── display_config.py           # Display configuration and module loading
-├── emulator_adapter.py         # E-Paper-Emulator adapter for testing without hardware
-├── weatherstation.service      # Systemd service file
-├── requirements.txt            # Python dependencies
+├── pi-weather-ink.service      # Systemd service file
 ├── .env                        # Your configuration (create from .env.example)
 ├── .env.example                # Configuration template
+├── pi_weather_ink/             # Main package
+│   ├── pi_weather_ink.py       # Main application
+│   ├── display_config.py       # Display configuration and module loading
+│   └── emulator_adapter.py     # E-Paper-Emulator adapter for testing without hardware
 ├── icons/                      # Weather icon assets
 │   ├── icons.json              # Weather icon unicode mapping
 │   └── weathericons.ttf        # Weather icons font
+├── scripts/
+│   └── fix-pi-zero-readbusy.sh # Pi Zero ReadBusy hang fix script
 ├── tests/                      # Test files
-│   ├── test_weatherstation.py
+│   ├── test_pi_weather_ink.py
 │   ├── test_display_config.py
 │   └── test_emulator_integration.py
 └── docs/

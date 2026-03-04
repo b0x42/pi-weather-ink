@@ -8,9 +8,10 @@ Raspberry Pi weather station displaying current weather on Waveshare 2.13" e-Pap
 
 ## Architecture
 
-Two-file core:
-- `weatherstation.py` — `WeatherStation` class, `display_weather()` rendering, main loop
+Package: `pi_weather_ink/`
+- `pi_weather_ink.py` — `WeatherStation` class, `display_weather()` rendering, main loop
 - `display_config.py` — `DISPLAY_REGISTRY` mapping model names to specs, `load_display_module()` for dynamic import, `get_layout_config()` for resolution-based layout
+- `emulator_adapter.py` — wraps E-Paper-Emulator with waveshare_epd interface
 
 Key patterns:
 - **Display registry** — all supported models defined in `_DISPLAY_REGISTRY` dict with width, height, colors, features
@@ -39,12 +40,12 @@ pip install -e ".[dev]"
 ### Before committing
 ```bash
 .venv/bin/python -m pytest tests/ -v
-pylint --fail-under=8 $(find . -name "*.py" -not -path "./tests/*")
+pylint --fail-under=8 $(find pi_weather_ink/ -name "*.py")
 ```
 
 ### Common tasks
 - **Add display model** — add entry to `DISPLAY_REGISTRY` in `display_config.py`
-- **Change layout** — modify `display_weather()` in `weatherstation.py`
+- **Change layout** — modify `display_weather()` in `pi_weather_ink/pi_weather_ink.py`
 - **Update icon mappings** — edit `icons/icons.json`
 
 ### Release process
@@ -56,7 +57,7 @@ pylint --fail-under=8 $(find . -name "*.py" -not -path "./tests/*")
 ## Common Pitfalls
 
 - **Icon positioning** — use `getbbox()` not `getmetrics()` for precise padding; `getmetrics()` includes invisible font whitespace
-- **Hardware mocking** — mock `waveshare_epd` and `pirateweather` *before* importing `weatherstation` in tests
+- **Hardware mocking** — mock `waveshare_epd` and `pirateweather` *before* importing `pi_weather_ink` in tests
 - **Display dimensions** — canvas is landscape (width > height) even though EPD spec lists portrait dimensions
 - **Bi-color buffer** — bi-color displays need two buffers passed to `display()`; monochrome displays use one
 - **Font rendering** — differs between macOS (emulator) and Raspberry Pi; verify final layout on hardware

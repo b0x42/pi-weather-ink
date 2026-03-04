@@ -81,9 +81,9 @@ At minimum, set your `PIRATE_WEATHER_API_KEY`. See [Configuration](../README.md#
 ## 5. Set Up Log File
 
 ```bash
-sudo touch /var/log/weatherstation.log
-sudo chown "$(whoami):$(whoami)" /var/log/weatherstation.log
-chmod 644 /var/log/weatherstation.log
+sudo touch /var/log/pi-weather-ink.log
+sudo chown "$(whoami):$(whoami)" /var/log/pi-weather-ink.log
+chmod 644 /var/log/pi-weather-ink.log
 ```
 
 ## 6. Run as System Service (optional)
@@ -112,9 +112,9 @@ pip install .
 ### 1. Stop and remove the service
 
 ```bash
-sudo systemctl stop weatherstation
-sudo systemctl disable weatherstation
-sudo rm /etc/systemd/system/weatherstation.service
+sudo systemctl stop pi-weather-ink
+sudo systemctl disable pi-weather-ink
+sudo rm /etc/systemd/system/pi-weather-ink.service
 sudo systemctl daemon-reload
 ```
 
@@ -136,5 +136,5 @@ rm -rf ~/pi-weather-ink
 
 ```bash
 rm ~/.env
-sudo rm /var/log/weatherstation.log
+sudo rm /var/log/pi-weather-ink.log
 ```

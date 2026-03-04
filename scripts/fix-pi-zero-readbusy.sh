@@ -107,4 +107,4 @@ echo "  Done."
 echo ""
 
 echo "Fix applied! Restart the service with:"
-echo "  sudo systemctl restart weatherstation"
+echo "  sudo systemctl restart pi-weather-ink"

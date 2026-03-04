@@ -2,7 +2,7 @@
 
 from PIL import Image, ImageChops
 
-from display_config import get_display_config
+from .display_config import get_display_config
 
 try:
     from epaper_emulator import EPD as EmulatorEPD
@@ -60,7 +60,7 @@ class EmulatorAdapter:
                 f"Supported models: {list(EMULATOR_CONFIG_MAPPING.keys())}"
             )
 
-        # reverse_orientation makes window landscape since weatherstation renders in landscape
+        # reverse_orientation makes window landscape since pi-weather-ink renders in landscape
         self._epd = EmulatorEPD(
             config_file=config_file,
             use_tkinter=use_tkinter,

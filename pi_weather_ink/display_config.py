@@ -206,6 +206,16 @@ def load_display_module(model_name):
                 f"Failed to load emulator for {model_name}: {e}"
             ) from e
     else:
+        # Displays not in waveshare-epaper package — use bundled drivers
+        if model_name == 'epd4in2g':
+            try:
+                from .drivers.epd4in2g_adapter import EPD
+                return EPD
+            except ImportError as e:
+                raise ImportError(
+                    f"Failed to load bundled driver for {model_name}: {e}"
+                ) from e
+
         # Load hardware driver via waveshare-epaper package
         try:
             import epaper

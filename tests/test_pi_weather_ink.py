@@ -24,7 +24,9 @@ if os.environ.get("USE_EMULATOR", "false").lower() != "true":
     mock_epaper.epaper = mock_epaper_factory
     sys.modules['epaper'] = mock_epaper
 
-from pi_weather_ink.pi_weather_ink import wrap_text, get_line_height, fit_summary_to_lines, display_weather  # noqa: E402
+from pi_weather_ink.pi_weather_ink import (  # noqa: E402
+    wrap_text, get_line_height, fit_summary_to_lines, display_weather
+)
 from pi_weather_ink.display_config import get_layout_config  # noqa: E402
 
 ICONS_PATH = os.path.join(PROJECT_ROOT, "icons", "icons.json")
